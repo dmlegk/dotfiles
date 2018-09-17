@@ -6,17 +6,18 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
+
 Plugin 'tomasr/molokai'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'rodjek/vim-puppet'
+Plugin 'vim-airline/vim-airline'
+Plugin 'tpope/vim-fugitive'
 
 " TODO: check these plugins
 "Plugin 'kien/ctrlp.vim'
-"Plugin 'bling/vim-airline'
 "Plugin 'tpope/vim-bundler'
-"Plugin 'tpope/vim-fugitive'
 "Plugin 'godlygeek/tabular'
-"Plugin 'rodjek/vim-puppet'
 "Plugin 'stephpy/vim-yaml'
 
 

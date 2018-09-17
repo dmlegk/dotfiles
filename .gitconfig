@@ -23,6 +23,5 @@
     lg-local-commits-for-all-branches = log --branches --not --remotes --simplify-by-decoration --decorate --oneline
     diff-local = diff origin/HEAD
     reset-authors-by-rebase = rebase -i --exec 'git config --local resetting.author true' --exec 'git commit --amend --no-edit --reset-author' --exec 'git config --local resetting.author false'
-    su = !/home/vagrant/set-git-user.sh
 [branch]
     autosetuprebase = always

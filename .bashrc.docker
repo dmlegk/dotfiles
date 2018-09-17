@@ -1,0 +1,56 @@
+# Docker functions
+
+function _docker_inspect_partial {
+	local cur prev words cword
+	_get_comp_words_by_ref -n : cur prev words cword
+	cpos=1
+	declare -F _docker_inspect >/dev/null && _docker_inspect
+	return 0
+}
+
+function _docker_exec_partial {
+	local cur prev words cword
+	_get_comp_words_by_ref -n : cur prev words cword
+	cpos=1
+	declare -F _docker_exec >/dev/null && _docker_exec
+	return 0
+}
+cd
+
+# Get latest container ID
+function dl { docker ps -l -q; }
+
+# Get container process
+function dps { docker ps $@; }
+
+# Get container IP
+function dip { docker inspect --format '{{ .NetworkSettings.IPAddress }}' $1; }
+complete -F _docker_inspect_partial dip
+
+# Get container PID
+function dpid { docker inspect --format '{{.State.Pid}}' $@; }
+complete -F _docker_inspect_partial dpid
+
+# Enter docker container
+function dent { docker exec -i -t $1 /bin/bash; }
+complete -F _docker_exec_partial dent
+
+# Remove all containers
+function drm { docker rm $(docker ps -a -q); }
+
+# Kill container
+function dkill { docker kill $1; }
+complete -F _docker_exec_partial dkill
+
+# Kill and Remove all containers
+function dkr {
+	if [ -z "$1" ]; then
+		echo 'Killing and removing all docker containers'
+		containers=$(docker ps -a | grep -v swarm | grep -v gigabuild | cut -f1 -d" " | tail -n +2)
+		docker kill $containers && docker rm $containers;
+	else
+		echo "Killing and removing all docker containers containing $1"
+		docker ps -a | grep "$1" | awk '{ print $1 }' | xargs -I{} docker rm -f {}
+	fi
+}
+
